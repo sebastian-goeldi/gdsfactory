@@ -21,12 +21,12 @@ def size(region: kdb.Region, offset: float):
 
 @delayed
 def boolean_or(region1: kdb.Region, region2: kdb.Region):
-    return region1.__or__(region2)
+    return region1 + region2
 
 
 @delayed
 def boolean_not(region1: kdb.Region, region2: kdb.Region):
-    return kdb.Region.__sub__(region1, region2)
+    return region1 - region2
 
 
 @delayed
@@ -162,7 +162,7 @@ class Layout:
             )
 
         fc_index = fill_cell.cell_index()  # fill cell index
-        fc_box = fill_cell.bbox().enlarged(spacing[0] / 2 * 1e3, spacing[1] / 2 * 1e3)
+        fc_box = fill_cell.dbbox().enlarged(spacing[0] / 2, spacing[1] / 2).to_itype(fill_cell.klib.dbu)
         fill_margin = kf.kdb.Point(0, 0)
 
         fill = kf.KCell(fill_name)
